@@ -1,10 +1,13 @@
 import streamlit as st
 import pandas as pd
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 # 1. SETUP & API CONFIGURATION
 API_KEY = st.secrets["GOOGLE_API_KEY"]
-genai.configure(api_key=API_KEY)
+
+# Naye standard ke hisab se client initialize karein
+client = genai.Client(api_key=API_KEY)
 
 # Load restaurant menu safely
 @st.cache_data
@@ -17,10 +20,7 @@ def load_menu():
 
 menu_df = load_menu()
 
-# Sabse stable traditional model setup
-model = genai.GenerativeModel("gemini-pro")
-
-# 2. SYSTEM PROMPT FOR CHATBOT
+# SYSTEM PROMPT FOR CHATBOT
 SYSTEM_PROMPT = """
 You are 'Ustad', an expert Indian restaurant host.
 Be polite, professional, and help customers with the menu.
@@ -45,18 +45,28 @@ if user_input := st.chat_input("Ustad se baat karein..."):
     with st.chat_message("user"):
         st.write(user_input)
 
-    # Prepare complete conversation for Gemini
-    chat = model.start_chat(history=[])
-    
-    # Send system instructions first to guide the bot
-    full_prompt = f"{SYSTEM_PROMPT}\n\nHere is the chat history so far. Respond to the last message logically:\n"
+    # Naye SDK ke format mein history convert karein
+    formatted_contents = []
     for m in st.session_state.messages:
-        role_label = "Customer" if m["role"] == "user" else "Ustad"
-        full_prompt += f"{role_label}: {m['content']}\n"
-    
-    # Call Gemini API safely
+        # Naya SDK 'user' aur 'model' roles accept karta hai
+        sdk_role = "user" if m["role"] == "user" else "model"
+        formatted_contents.append(
+            types.Content(
+                role=sdk_role,
+                parts=[types.Part.from_text(text=m["content"])]
+            )
+        )
+
+    # Call Gemini API safely using the latest recommended model
     try:
-        response = chat.send_message(full_prompt)
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=formatted_contents,
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
+                temperature=0.7
+            )
+        )
         bot_response = response.text
         
         # Add bot response to history and show it
