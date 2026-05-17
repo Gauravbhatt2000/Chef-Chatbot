@@ -1,96 +1,63 @@
 import streamlit as st
 import pandas as pd
-import google.generativeai as genai
-import os
-from dotenv import load_dotenv
+import openai
 
-# --- 1. SETUP ---
-load_dotenv()
-# Note: Agar aap DeepSeek use kar rahe hain toh uska code thoda alag hoga, 
-# filhal hum Gemini ka stable version use kar rahe hain jo sabke liye chalta hai.
-# DeepSeek API Setup
+# 1. SETUP & API CONFIGURATION
 DEEPSEEK_API_KEY = st.secrets["DEEPSEEK_API_KEY"]
 
-# DeepSeek hamesha OpenAI ki library ya direct client se connect hota hai
-import openai
+# DeepSeek client initialisation
 client = openai.OpenAI(
     api_key=DEEPSEEK_API_KEY,
-    base_url="https://api.deepseek.com/v1"  # DeepSeek ka official server URL
+    base_url="https://api.deepseek.com/v1"
 )
 
-# Ustad Persona
+# Load restaurant menu
+try:
+    menu_df = pd.read_csv("menu.csv")
+except Exception as e:
+    st.error("Menu file missing!")
+
+# 2. USTAD SYSTEM PROMPT
 SYSTEM_PROMPT = """
-You are 'Ustad', an expert Indian restaurant host. 
+You are 'Ustad', an expert Indian restaurant host.
 Be polite, professional, and help customers with the menu.
 If someone asks for a dish not in the menu, apologize nicely.
 """
 
-# Fixed: Using 'gemini-pro' because it is more stable for v1beta
-try:
-    model = genai.GenerativeModel(
-        model_name='gemini-flash-latest',
-        system_instruction=SYSTEM_PROMPT
-    )
-except Exception:
-    # Fallback agar system_instruction support na kare
-    model = genai.GenerativeModel(model_name='gemini-pro')
-
-# --- 2. DATA LOADING ---
-@st.cache_data
-def load_menu():
-    try:
-        # quotechar is important for your CSV descriptions with commas
-        return pd.read_csv('menu.csv', quotechar='"', skipinitialspace=True)
-    except Exception:
-        st.error("Menu file (menu.csv) nahi mili!")
-        return pd.DataFrame()
-
-menu_df = load_menu()
-
-# --- 3. SESSION STATE ---
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-if "order_list" not in st.session_state:
-    st.session_state.order_list = []
-
-# --- 4. UI ---
-st.set_page_config(page_title="Ustad AI Restaurant", page_icon="👨‍🍳")
 st.title("👨‍🍳 Ustad AI - Your Expert Waiter")
 
-# Sidebar for Order
-with st.sidebar:
-    st.header("🛒 Order Summary")
-    if st.session_state.order_list:
-        df_order = pd.DataFrame(st.session_state.order_list)
-        st.table(df_order[['Item Name', 'Price']])
-        st.subheader(f"Total: ₹{df_order['Price'].sum()}")
-        if st.button("Clear Order"):
-            st.session_state.order_list = []
-            st.rerun()
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = [{"role": "assistant", "content": "Namaste! Welcome to our restaurant. How can Ustad help you today?"}]
 
-# --- 5. CHAT LOGIC ---
+# Display chat messages
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
-        st.markdown(msg["content"])
+        st.write(msg["content"])
 
-if prompt := st.chat_input("Ustad se baat karein..."):
-    st.session_state.messages.append({"role": "user", "content": prompt})
+# User Input
+if user_input := st.chat_input("Ustad se baat karein..."):
+    st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
-        st.markdown(prompt)
+        st.write(user_input})
 
-    # Simple logic to check menu
-    if "menu" in prompt.lower():
+    # Prepare messages for DeepSeek
+    api_messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    for m in st.session_state.messages:
+        api_messages.append({"role": m["role"], "content": m["content"]})
+
+    # Call DeepSeek API
+    try:
+        response = client.chat.completions.create(
+            model="deepseek-chat",
+            messages=api_messages,
+            temperature=0.7
+        )
+        bot_response = response.choices[0].message.content
+        
+        st.session_state.messages.append({"role": "assistant", "content": bot_response})
         with st.chat_message("assistant"):
-            st.write("Ji, ye raha hamara menu:")
-            st.dataframe(menu_df[['Item Name', 'Price', 'Category']], hide_index=True)
-            st.session_state.messages.append({"role": "assistant", "content": "Shown the menu."})
-    else:
-        with st.chat_message("assistant"):
-            try:
-                # Chat with context
-                full_prompt = f"Menu Items: {menu_df['Item Name'].tolist()}\nUser says: {prompt}"
-                response = model.generate_content(full_prompt)
-                st.markdown(response.text)
-                st.session_state.messages.append({"role": "assistant", "content": response.text})
-            except Exception as e:
-                st.error("Ustad busy hain, kripya dobara try karein!")
+            st.write(bot_response)
+            
+    except Exception as e:
+        st.error("Ustad busy hain, kripya dobara try karein!")               
