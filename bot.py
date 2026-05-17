@@ -8,8 +8,15 @@ from dotenv import load_dotenv
 load_dotenv()
 # Note: Agar aap DeepSeek use kar rahe hain toh uska code thoda alag hoga, 
 # filhal hum Gemini ka stable version use kar rahe hain jo sabke liye chalta hai.
-API_KEY = st.secrets["GOOGLE_API_KEY"]
-genai.configure(api_key=API_KEY)
+# DeepSeek API Setup
+DEEPSEEK_API_KEY = st.secrets["DEEPSEEK_API_KEY"]
+
+# DeepSeek hamesha OpenAI ki library ya direct client se connect hota hai
+import openai
+client = openai.OpenAI(
+    api_key=DEEPSEEK_API_KEY,
+    base_url="https://api.deepseek.com/v1"  # DeepSeek ka official server URL
+)
 
 # Ustad Persona
 SYSTEM_PROMPT = """
