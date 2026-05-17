@@ -3,7 +3,6 @@ import pandas as pd
 import google.generativeai as genai
 
 # 1. SETUP & API CONFIGURATION
-# Streamlit ke secrets se key uthana
 API_KEY = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=API_KEY)
 
@@ -18,8 +17,8 @@ def load_menu():
 
 menu_df = load_menu()
 
-# Gemini 1.5 Flash model setup (Latest and stable)
-model = genai.GenerativeModel(model_name='gemini-flash-latest',
+# Sabse stable traditional model setup
+model = genai.GenerativeModel("gemini-pro")
 
 # 2. SYSTEM PROMPT FOR CHATBOT
 SYSTEM_PROMPT = """
