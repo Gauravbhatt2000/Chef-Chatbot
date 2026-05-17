@@ -1,0 +1,43 @@
+Category,Item Name,Description,Price,Tag
+NASHTA (BREAKFAST),Aloo Paratha,"Stuffed wheat flatbread, spiced potato, dahi & pickle",60,Veg
+NASHTA (BREAKFAST),Poha,"Flattened rice, mustard seeds, onion, green chilli, lime & coriander",40,Bestseller
+NASHTA (BREAKFAST),Idli Sambar,"3 soft steamed rice cakes, piping hot sambar, coconut chutney",50,Veg
+NASHTA (BREAKFAST),Masala Chai + Toast,Kadak ginger-cardamom chai with 2 slices buttered toast,30,Veg
+NASHTA (BREAKFAST),Upma,"Semolina with vegetables, curry leaves, mustard & cashews",45,Veg
+NASHTA (BREAKFAST),Medu Vada,"Crispy urad dal fritters, sambar & coconut chutney",55,Bestseller
+NASHTA (BREAKFAST),Masala Dosa,"Crispy fermented crepe, spiced potato filling, sambar & 2 chutneys",80,Bestseller
+NASHTA (BREAKFAST),Besan Chilla,"Gram flour pancake with onion, tomato, green chilli & coriander",50,Veg
+"DAL, SABZI & ROTI",Dal Tadka + 2 Roti,"Yellow lentils tempered with ghee, cumin & garlic",80,Bestseller
+"DAL, SABZI & ROTI",Rajma Chawal,"Slow-cooked kidney bean curry, steamed basmati, onion salad",90,Veg
+"DAL, SABZI & ROTI",Aloo Gobhi + Roti,"Potato & cauliflower stir fry, dry masala, 2 rotis",70,Veg
+"DAL, SABZI & ROTI",Chole Bhature,"Spicy chickpea curry, 2 fluffy fried bhaturas, sliced onion",100,Spicy
+"DAL, SABZI & ROTI",Palak Paneer + Roti,"Cottage cheese in creamy spinach gravy, 2 butter rotis",110,Veg
+"DAL, SABZI & ROTI",Matar Paneer + Rice,"Paneer & green peas in tomato-onion gravy, steamed rice",110,Veg
+"DAL, SABZI & ROTI",Baingan Bharta,"Smoky roasted aubergine mash, onion-tomato masala, 2 rotis",85,Spicy
+"DAL, SABZI & ROTI",Dal Makhani + Naan,"Slow-cooked black lentils in buttery tomato gravy, 1 naan",120,Bestseller
+RICE & THALI,Mini Veg Thali,"Dal, 1 sabzi, 2 roti, rice, pickle & papad — full meal",120,Bestseller
+RICE & THALI,Khichdi,"Comfort rice & lentil porridge, ghee drizzle, fried papad",70,Veg
+RICE & THALI,Egg Fried Rice,"Wok-tossed basmati, scrambled egg, soy, spring onion",90,Spicy
+RICE & THALI,Pav Bhaji,"Mashed spiced veggie gravy, buttered pav, onion & lime",80,Bestseller
+RICE & THALI,Veg Biryani,"Fragrant basmati, mixed vegetables, whole spices, raita & salad",110,Veg
+RICE & THALI,Chicken Biryani,"Dum-cooked basmati with spiced chicken, saffron, raita & salad",150,Spicy
+CHAAT & SNACKS,Samosa (2 pcs),"Crispy pastry, spiced potato & peas, tamarind chutney",30,Veg
+CHAAT & SNACKS,Bhel Puri,"Puffed rice, sev, onion, tomato, raw mango, chutneys",40,Veg
+CHAAT & SNACKS,Vada Pav,"Spiced potato vada in soft pav, dry garlic chutney",35,Bestseller
+CHAAT & SNACKS,Dahi Papdi Chaat,"Papdi, chickpeas, yogurt, tamarind & green chutney, sev",60,Spicy
+CHAAT & SNACKS,Pani Puri (6 pcs),"Crispy puris filled with spiced mint-tamarind pani & mashed chana",40,Bestseller
+CHAAT & SNACKS,Aloo Tikki (2 pcs),"Pan-fried potato patties, chole, yogurt, chutneys & sev",50,Spicy
+CHAAT & SNACKS,Kachori (2 pcs),"Flaky deep-fried pastry, spiced moong dal filling, green chutney",40,Veg
+CHAAT & SNACKS,Bread Pakora,"Potato-stuffed bread fritters in spiced besan batter, chutney",45,Veg
+MEETHA & MITHAI (SWEETS),Gulab Jamun (2 pcs),Soft milk-solid dumplings soaked in rose sugar syrup,40,Veg
+MEETHA & MITHAI (SWEETS),Kheer,"Creamy rice pudding, cardamom, saffron, almonds & raisins",50,Bestseller
+MEETHA & MITHAI Sweets,"Lassi (Sweet/Salted)","Chilled blended yogurt drink, sweet or salted",40,Veg
+MEETHA & MITHAI Sweets,"Jalebi (4 pcs)","Crispy spiral-shaped sweets soaked in saffron syrup, served warm",40,Veg
+MEETHA & MITHAI (SWEETS),Halwa,"Suji halwa with ghee, cardamom, cashews & raisins",45,Veg
+MEETHA & MITHAI (SWEETS),Rasgulla (2 pcs),"Soft spongy chenna balls soaked in light sugar syrup",40,Veg
+MEETHA & MITHAI (SWEETS),Barfi (2 pcs),"Milk-based fudge with pistachios — available in kaju & coconut",50,Veg
+MEETHA & MITHAI (SWEETS),Kulfi,"Dense Indian ice cream, rose, malai or mango flavour",50,Bestseller
+MEETHA & MITHAI (SWEETS),Moong Dal Halwa,"Slow-cooked split moong lentil halwa with ghee, sugar & dry fruits",60,Veg
+MEETHA & MITHAI (SWEETS),Shahi Tukda,"Fried bread soaked in rabri, garnished with pistachios & saffron",70,Bestseller
+MEETHA & MITHAI (SWEETS),Gajar Ka Halwa,"Slow-cooked grated carrot in milk, ghee, sugar & cardamom",60,Veg
+MEETHA & MITHAI (SWEETS),Malpua (2 pcs),"Fried sweet pancakes dipped in sugar syrup, rabri on the side",55,Veg
