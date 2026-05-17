@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Note: Agar aap DeepSeek use kar rahe hain toh uska code thoda alag hoga, 
 # filhal hum Gemini ka stable version use kar rahe hain jo sabke liye chalta hai.
-API_KEY = os.getenv("GOOGLE_API_KEY")
+API_KEY = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=API_KEY)
 
 # Ustad Persona
