@@ -19,7 +19,7 @@ def load_menu():
 menu_df = load_menu()
 
 # Gemini 1.5 Flash model setup (Latest and stable)
-model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+model = genai.GenerativeModel(model_name='gemini-flash-latest',
 
 # 2. SYSTEM PROMPT FOR CHATBOT
 SYSTEM_PROMPT = """
