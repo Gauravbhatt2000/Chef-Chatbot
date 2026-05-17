@@ -12,10 +12,15 @@ client = openai.OpenAI(
 )
 
 # Load restaurant menu
-try:
-    menu_df = pd.read_csv("menu.csv")
-except Exception as e:
-    st.error("Menu file missing!")
+@st.cache_data
+def load_menu():
+    try:
+        return pd.read_csv("menu.csv", quotechar='"', skipinitialspace=True)
+    except Exception as e:
+        st.error("Menu file (menu.csv) nahi mili!")
+        return pd.DataFrame()
+
+menu_df = load_menu()
 
 # 2. USTAD SYSTEM PROMPT
 SYSTEM_PROMPT = """
@@ -30,6 +35,9 @@ st.title("👨‍🍳 Ustad AI - Your Expert Waiter")
 if "messages" not in st.session_state:
     st.session_state.messages = [{"role": "assistant", "content": "Namaste! Welcome to our restaurant. How can Ustad help you today?"}]
 
+if "order_list" not in st.session_state:
+    st.session_state.order_list = []
+
 # Display chat messages
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
@@ -39,7 +47,7 @@ for msg in st.session_state.messages:
 if user_input := st.chat_input("Ustad se baat karein..."):
     st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
-        st.write(user_input})
+        st.write(user_input)
 
     # Prepare messages for DeepSeek
     api_messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -60,4 +68,4 @@ if user_input := st.chat_input("Ustad se baat karein..."):
             st.write(bot_response)
             
     except Exception as e:
-        st.error("Ustad busy hain, kripya dobara try karein!")               
+        st.error("Ustad busy hain, kripya dobara try karein!")
